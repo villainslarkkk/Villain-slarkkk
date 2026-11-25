@@ -1,0 +1,138 @@
+/* Villain Slarkkk // GLITCH EDITION — interface layer, no external assets. */
+html { background: #050806; }
+body, body.bg-gray-900 {
+    background-color: #050806;
+    background-image: linear-gradient(90deg, rgba(37,99,56,.09) 1px, transparent 1px), linear-gradient(0deg, rgba(37,99,56,.09) 1px, transparent 1px);
+    background-size: 36px 36px;
+    color: #def6e5;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+}
+body:after { content: ''; position: fixed; top:0; right:0; bottom:0; left:0; pointer-events:none; z-index: 60; opacity:.16; background: repeating-linear-gradient(0deg, transparent, transparent 3px, #000 4px); }
+button, input, select { font: inherit; }
+button, a, input, select { -webkit-tap-highlight-color: rgba(57,255,131,.18); }
+button:focus, a:focus, input:focus, select:focus { outline: 2px solid #39ff83; outline-offset: 2px; }
+a { color:#75ffa6; }
+#initial-screen, #exploit-main-screen { background: transparent !important; }
+#initial-screen { min-height: 100vh; height: auto; padding: 72px 18px 58px; }
+#initial-screen header { top:14px; left: 2%; right:2%; padding: 8px 10px; border:1px solid #284333; background:#09110c; border-radius: 4px; }
+#initial-screen header:after { content:'WK // 01'; color:#80b993; font: 10px monospace; letter-spacing:2px; align-self:center; }
+.wk-hero { text-align:center; margin: 8px 0 14px; }
+.wk-kicker, .wk-subtitle, .wk-footnote { font: 11px/1.5 monospace; letter-spacing: 2px; color:#91bba0; }
+.wk-dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:#39ff83; box-shadow:0 0 10px #39ff83; margin-right:6px; }
+.wk-title { position:relative; display:inline-block; font:bold 52px/1.15 monospace; letter-spacing: 7px; margin:10px 0; color:#39ff83; text-shadow: 3px 0 #155b30, -2px 0 #b3ffd0, 0 0 22px rgba(57,255,131,.28); }
+.wk-title:after { content:attr(data-text); position:absolute; top:0; left:0; width:100%; color:#b3ffd0; clip:rect(14px, 600px, 20px, 0); opacity:.55; -webkit-animation:wk-glitch 5s infinite; animation:wk-glitch 5s infinite; pointer-events:none; }
+@-webkit-keyframes wk-glitch { 0%,91%,100% { -webkit-transform:translateX(0); opacity:0; } 92% { -webkit-transform:translateX(-4px); opacity:.55; } 94% { -webkit-transform:translateX(5px); opacity:.4; } 96% { -webkit-transform:translateX(0); opacity:0; } }
+@keyframes wk-glitch { 0%,91%,100% { transform:translateX(0); opacity:0; } 92% { transform:translateX(-4px); opacity:.55; } 94% { transform:translateX(5px); opacity:.4; } 96% { transform:translateX(0); opacity:0; } }
+.wk-tags { margin:12px auto 0; }
+.wk-tags span { display:inline-block; font:11px monospace; padding:6px 9px; margin:3px; border:1px solid #2d6340; background:#0d1c12; color:#b4f7c7; }
+.wk-footnote { text-align:center; margin-top:16px; font-size:9px; letter-spacing:1px; }
+.wk-footnote span { color:#39ff83; }
+#pslogo { padding:0; }
+#ps-logo-container { padding:19px; border:1px solid #3b9756; border-radius:12px; background:#0b1c11; box-shadow:0 0 22px rgba(57,255,131,.14), inset 0 0 18px rgba(57,255,131,.08); }
+#ps-logo-container:hover { background:#142d1d; border-color:#39ff83; }
+#ps-logo { width:76px; height:76px; fill:#39ff83 !important; }
+#click-to-start-text { font-family:monospace; font-weight:bold; color:#8effb3; letter-spacing:1px; margin-top:12px; }
+#PS4FW { font: 13px/1.4 monospace; color:#b3d5bd; margin:8px 0 12px; }
+#choosejb-initial, #exploit-status-panel, #payloadsSection, #about-popup, #settings-popup, #theme-popup, #choose-fanThreshold { background:#09120d; border:1px solid #30543b; border-top:2px solid #39ff83; border-radius:6px; box-shadow:0 8px 24px rgba(0,0,0,.5); }
+#choosejb-initial { padding:14px 18px; width:100%; max-width:640px; }
+#choosejb-initial h3, #state, #payloads-section-title, #about-popup h2, #settings-popup h2, #theme-popup h2, #choose-fanThreshold h2 { color:#93ffb6; font-family:monospace; letter-spacing:.5px; }
+#choosejb-initial h3 { font-size:15px; margin-bottom:10px; }
+#choosejb-initial label, #henSelection label { border:1px solid #2c4b35; background:#101f15; border-radius:4px; margin-bottom:4px; }
+#choosejb-initial label:hover, #henSelection label:hover { border-color:#39ff83; background:#163321; }
+#scrollDown { bottom:13px; color:#39ff83; }
+#exploitContainer { padding:12px !important; }
+#exploit-status-panel, #payloadsSection { padding:16px; min-width:0; }
+#DebugConsole, .wk-console-page #console { background:#020603; color:#9bffbb; border:1px solid #23402c; border-radius:4px; font-family:monospace; box-shadow:inset 0 0 12px rgba(32,130,65,.12); }
+#console { font-family:monospace; }
+#successRate { color:#9cc9a9; font-family:monospace; font-size:12px; }
+.bg-blue-600 { background:#39ff83; color:#07130b; font-weight:bold; }
+.bg-blue-600:hover, .hover\:bg-blue-700:hover { background:#8dffb5; color:#07130b; }
+#exploitRun { border-radius:4px; }
+#exploitRun svg { color:#07130b; }
+.settings-btn, .about-btn, .theme-btn, #updateCache { color:#a6e8b9; background:#101f15; border:1px solid #2d5138; border-radius:4px; }
+.settings-btn:hover, .about-btn:hover, .theme-btn:hover, #updateCache:hover { background:#163321; border-color:#39ff83; }
+#default-tab-content, .tabs { background:transparent; box-shadow:none; }
+.tabs { border-bottom:1px solid #294b35; padding:6px 0; }
+.tabs button { font-family:monospace; font-size:12px; border-radius:2px; }
+.tabs button[aria-selected="true"] { background:#14291a; color:#39ff83; border-color:#39ff83; }
+#payloadsGrid .payload { background:#0f1e14; border:1px solid #2c4b35; border-radius:4px; margin-bottom:8px; }
+#payloadsGrid .payload:hover { border-color:#39ff83; background:#152d1d; }
+input[type="text"], input[type="number"], input[type="file"], select { background:#08110b; border:1px solid #355740; border-radius:4px; padding:7px; color:#c5eed0; }
+select option { background:#0c1710; color:#def6e5; }
+input[type="radio"] { background:#061009; border:1px solid #6d997b; width:17px; height:17px; flex-shrink:0; }
+input[type="radio"]:checked { background:#39ff83; border:4px solid #0a1b10; box-shadow:0 0 0 1px #39ff83; }
+input[type="checkbox"] { accent-color:#39ff83; }
+.bg-black\/50 { background-color:rgba(0,0,0,.78); }
+#about-popup-overlay, #settings-popup-overlay, #theme-popup-overlay, #choose-fanThreshold-overlay { background:rgba(0,0,0,.86); }
+#about-popup h3, #settings-popup h3, #theme-popup h3 { color:#a7edbb; }
+.cache-title { font:bold 25px monospace; color:#39ff83; text-shadow:2px 0 #186939; }
+.cache-subtitle { font-family:monospace; color:#a5c7ad; }
+.progress-bar-wrap { border:1px solid #386344; background:#0b1b10; border-radius:3px; height:12px; }
+.progress-bar-fill { background:linear-gradient(90deg,#0d7b39,#39ff83); border-radius:2px; }
+.wk-console-page { padding:16px; }
+.wk-console-page header { padding:10px; box-sizing:border-box; border:1px solid #30543b; background:#09120d; color:#8effb3; font-family:monospace; }
+.wk-console-page header a button { background:#39ff83; color:#07130b; border-radius:4px; font-weight:bold; }
+::-webkit-scrollbar-thumb { background:#2c8b4b; border-radius:2px; }
+@media (max-height:650px) { .wk-title { font-size:38px; margin:5px 0; } .wk-hero { margin:3px 0 8px; } .wk-tags { margin-top:6px; } #initial-screen { padding-top:65px; padding-bottom:44px; } #ps-logo-container { padding:12px; } #ps-logo { width:55px; height:55px; } .wk-footnote { margin-top:8px; } }
+@media (max-width:540px) { .wk-title { font-size:36px; letter-spacing:4px; } .wk-kicker,.wk-subtitle { font-size:10px; letter-spacing:1px; } #initial-screen header:after { display:none; } #choosejb-initial { padding:12px; } #initial-screen header { padding:5px; } #exploitContainer { padding:8px !important; } #payloadsSection { padding:12px; } }
+@media (prefers-reduced-motion:reduce) { .wk-title:after { -webkit-animation:none; animation:none; opacity:0; } }
+
+/* Brand title sizing */
+.wk-title { font-size:44px; letter-spacing:4px; overflow-wrap:break-word; max-width:100%; }
+@media (max-width:540px) { .wk-title { font-size:27px; letter-spacing:2px; } }
+@media (max-height:650px) and (min-width:541px) { .wk-title { font-size:34px; } }
+
+/* TERMINAL EDITION — asymmetrical two-column industrial layout */
+body, body.bg-gray-900 {background:#060807; color:#d9e9d8; font-family:Arial,sans-serif;}
+body:after {opacity:.07;}
+#initial-screen {box-sizing:border-box; min-height:100vh; height:auto; padding:92px 5% 48px; justify-content:center; align-items:stretch;}
+#initial-screen header {box-sizing:border-box; left:5%; right:5%; width:90%; max-width:none; top:20px; border:0; border-bottom:1px solid #304331; border-radius:0; background:transparent; padding:0 0 12px;}
+#initial-screen header:after {content:'V/S   //   TERMINAL 02'; color:#a4f986; letter-spacing:3px; font-size:11px;}
+.settings-btn,.about-btn,.theme-btn,#updateCache {border-radius:0; border:1px solid #344637; background:#101610; color:#b7d6b0;}
+.vs-workspace {display:-webkit-flex;display:flex; width:100%; max-width:1080px; margin:0 auto; -webkit-align-items:stretch;align-items:stretch; border:1px solid #304331; background:#0a0e0a;}
+.vs-identity {box-sizing:border-box; width:47%; padding:28px 34px; position:relative; background:#111b0d; border-right:1px solid #4d633b; overflow:hidden;}
+.vs-eyebrow {font:11px monospace; letter-spacing:2px; color:#a8c69c;}
+.vs-signal {display:inline-block; width:8px;height:8px;background:#b2ff46; margin-right:7px;}
+.vs-mark {font:bold 42px/1 Arial,sans-serif; margin:26px 0 12px; color:#bbff5b; letter-spacing:-4px;}
+.vs-mark span {color:#4f7731; letter-spacing:-8px; padding:0 8px;}
+.vs-title {font:bold 68px/.88 Arial,sans-serif; letter-spacing:-4px; margin:0; color:#e9f3dd; position:relative;}
+.vs-title span {color:#b3ff53;}
+.vs-title:after {content:attr(data-text);position:absolute;top:0;left:0; color:#b3ff53; clip:rect(16px,500px,21px,0);opacity:0; animation:wk-glitch 5s infinite; -webkit-animation:wk-glitch 5s infinite;}
+.vs-rule {height:1px;background:#50643c;margin:23px 0 15px;}
+.vs-description {font:12px/1.6 monospace; letter-spacing:3px; color:#c1d6b6; margin:0 0 20px;}
+.vs-spec {border-left:3px solid #a3ff3e;padding-left:12px;}
+.vs-spec small {display:block; font:10px monospace;color:#819674;letter-spacing:1px;margin-bottom:7px;}
+.vs-spec strong {display:block;font: bold 18px/1.4 monospace;color:#d9f8ce;}
+.vs-stripes {height:9px; margin-top:23px;background:repeating-linear-gradient(135deg,#8ab34e 0,#8ab34e 5px,transparent 5px,transparent 12px);opacity:.45;}
+.vs-command {box-sizing:border-box;width:53%; padding:22px; background:#080c08; min-width:0;}
+.vs-panel-head {display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#202e17;color:#c6ff98;font:bold 11px monospace;letter-spacing:2px;border-left:3px solid #b3ff53;}
+.vs-action {text-align:left; padding:14px 0;}
+#pslogo {display:block;width:100%;}
+#ps-logo-container {box-sizing:border-box; display:flex;flex-direction:row;justify-content:flex-start;align-items:center; width:100%;border:1px solid #b3ff53;border-radius:0;padding:17px 14px;background:#b3ff53;box-shadow:none;}
+#ps-logo-container:after {content:'START SESSION  >';font:bold 17px monospace;letter-spacing:1px;color:#10170b;margin-left:12px;}
+#ps-logo-container:hover {background:#e0ffb5;border-color:#e0ffb5;}
+#ps-logo {width:35px;height:35px;fill:#10170b !important;}
+#click-to-start-text {font:11px/1.4 monospace;color:#a6b99c;margin:10px 0 0;letter-spacing:0;}
+#PS4FW {font:12px/1.5 monospace;text-align:left;margin:12px 0;color:#c5d4be;}
+#choosejb-initial {box-sizing:border-box;text-align:left;padding:12px 0 0;width:100%;max-width:none; background:transparent;border:0;box-shadow:none;}
+#choosejb-initial h3 {font:12px monospace;color:#95a98d;margin-bottom:8px;}
+#choosejb-initial>div {flex-direction:column;gap:4px;}
+#choosejb-initial label,#henSelection label {box-sizing:border-box;width:100%;border-radius:0;background:#111b10;border:1px solid #384d30;padding:10px;}
+#choosejb-initial label span {font-size:14px;color:#d9e9d1;}
+#choosejb-initial label:hover {background:#23351c;border-color:#b3ff53;}
+#choosejb-initial input[type=radio]:checked {background:#b3ff53;box-shadow:0 0 0 1px #b3ff53;}
+.wk-footnote {text-align:left;width:100%;max-width:1080px;margin:14px auto 0; color:#879a80;}
+#scrollDown {right:5%;bottom:8px;color:#b3ff53;}
+#exploitContainer {padding:20px 4% !important;}
+#exploit-status-panel,#payloadsSection,#about-popup,#settings-popup,#theme-popup,#choose-fanThreshold {border-radius:0;border:1px solid #415338;border-top:5px solid #a8ed51;background:#0c110b;box-shadow:none;}
+#state,#payloads-section-title {font:bold 19px Arial,sans-serif;letter-spacing:1px;text-transform:uppercase;color:#c9f9a5;}
+#DebugConsole,.wk-console-page #console {border-radius:0;background:#030503;color:#b6ee95;border:1px solid #34492c;}
+#exploitRun,.bg-blue-600 {border-radius:0;background:#b3ff53;color:#10170b;}
+#payloadsGrid .payload {border-radius:0;background:#131c10;border-left:3px solid #779d45;}
+#default-tab button {border-radius:0;font:12px monospace;}
+.cache-title {color:#b3ff53;font:bold 30px Arial,sans-serif;letter-spacing:-1px;}
+.progress-bar-wrap,.progress-bar-fill {border-radius:0;}
+.progress-bar-fill {background:#b3ff53;}
+.wk-console-page header {border-radius:0;border-left:4px solid #b3ff53;}
+@media(max-width:720px){#initial-screen{padding:76px 4% 42px;}.vs-workspace{flex-direction:column;}.vs-identity,.vs-command{width:100%;}.vs-identity{border-right:0;border-bottom:1px solid #415338;padding:19px;}.vs-title{font-size:49px;letter-spacing:-3px;}.vs-mark{font-size:28px;margin:12px 0 8px;}.vs-rule{margin:13px 0;}.vs-spec strong{display:inline-block;margin-right:9px;font-size:14px;}.vs-description{margin-bottom:12px;}.vs-stripes{margin-top:12px;}.vs-command{padding:14px;}#initial-screen header:after{display:none;}}
+@media(max-height:650px) and (min-width:721px){#initial-screen{padding-top:68px;}.vs-title{font-size:53px;}.vs-identity{padding:20px;}.vs-command{padding:16px;}.vs-mark{margin:12px 0;}.vs-stripes{margin-top:12px;}}
