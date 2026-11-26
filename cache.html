@@ -30,73 +30,65 @@
     <script src="./includes/js/testMode.js"></script>
     <script src="./includes/js/firmware.js"></script>
     <script>
-        (function () {
-            var fwVersion = typeof getPs4FwVersion === 'function' ? getPs4FwVersion() : null;
-            var targetPage = typeof getCachePage === 'function' ? getCachePage(fwVersion) : '';
-            var redirectUrl = (typeof mainPage !== 'undefined' && mainPage) ? mainPage : './index.html';
+        var fwVersion = typeof getPs4FwVersion === 'function' ? getPs4FwVersion() : null;
+        var targetPage = typeof getCachePage === 'function' ? getCachePage(fwVersion) : null;
+        var fallbackMainPage = (typeof mainPage !== 'undefined' && mainPage) ? mainPage : './index.html';
 
-            var statusEl = document.getElementById('cacheStatus');
-            var fillEl = document.getElementById('progressFill');
-            var frame = document.getElementById('cacheFrame');
-            var receivedMessage = false;
+        var statusEl = document.getElementById('cacheStatus');
+        var fillEl = document.getElementById('progressFill');
+        var frame = document.getElementById('cacheFrame');
+        var settled = false;
 
-            function navigateAfterDelay(url, delayMs) {
-                setTimeout(function () {
-                    window.location.replace(url);
-                }, delayMs);
-            }
+        function finishAndRedirect(message, delayMs) {
+            if (settled) return;
+            settled = true;
+            clearTimeout(stallTimer);
+            statusEl.textContent = message;
+            setTimeout(function () {
+                window.location.replace(fallbackMainPage);
+            }, delayMs);
+        }
 
-            // Listen for postMessages from the iframe (iframe_cache.js)
-            window.addEventListener('message', function (event) {
-                var data = event.data;
-                if (!data || !data.type) return;
+        window.addEventListener('message', function (event) {
+            var data = event.data;
+            if (!data || !data.type) return;
 
-                receivedMessage = true;
-
-                if (data.type === 'CACHE_PROGRESS') {
-                    if (data.percent >= 0) {
-                        fillEl.style.width = data.percent + '%';
-                        statusEl.textContent = 'Downloading... ' + data.percent + '%';
-                    } else {
-                        statusEl.textContent = 'Downloading... (' + data.loaded + ' of ' + data.total + ')';
-                    }
-                } else if (data.type === 'CACHE_COMPLETE' || data.type === 'CACHE_EXISTS') {
-                    fillEl.style.width = '100%';
-                    statusEl.textContent = data.type === 'CACHE_EXISTS' ? 'Already cached! Redirecting...' : 'Done! Redirecting...';
-                    navigateAfterDelay(redirectUrl, 1000);
-                } else if (data.type === 'CACHE_CHECKING') {
-                    statusEl.textContent = 'Checking cache...';
-                } else if (data.type === 'CACHE_DOWNLOADING') {
-                    statusEl.textContent = 'Caching files...';
-                } else if (data.type === 'CACHE_ERROR') {
-                    var reason = data.reason || 'Unknown error';
-                    statusEl.textContent = 'Cache error: ' + reason;
-                    navigateAfterDelay(redirectUrl, 3000);
+            if (data.type === 'CACHE_PROGRESS') {
+                if (data.percent >= 0) {
+                    fillEl.style.width = data.percent + '%';
+                    statusEl.textContent = 'Downloading... ' + data.percent + '%';
+                } else {
+                    statusEl.textContent = 'Downloading... (' + data.loaded + ' of ' + data.total + ')';
                 }
-            }, false);
-
-            if (frame) {
-                frame.addEventListener('load', function () {
-                    if (frame.src && frame.src !== 'about:blank' && !receivedMessage) {
-                        statusEl.textContent = 'Cache frame loaded for ' + (fwVersion || 'unknown') + '; waiting for cache status...';
-                    }
-                });
-
-                frame.addEventListener('error', function () {
-                    statusEl.textContent = 'Cache error: Failed to load cache page (' + targetPage + ')';
-                });
+            } else if (data.type === 'CACHE_COMPLETE' || data.type === 'CACHE_EXISTS') {
+                fillEl.style.width = '100%';
+                var msg = data.type === 'CACHE_EXISTS' ? 'Already cached! Redirecting...' : 'Done! Redirecting...';
+                finishAndRedirect(msg, 1000);
+            } else if (data.type === 'CACHE_CHECKING') {
+                statusEl.textContent = 'Checking cache...';
+            } else if (data.type === 'CACHE_DOWNLOADING') {
+                statusEl.textContent = 'Caching files...';
+            } else if (data.type === 'CACHE_ERROR') {
+                var reason = data.reason || 'Unknown error';
+                finishAndRedirect('Cache error: ' + reason, 3000);
             }
+        }, false);
 
-            // Load the firmware-based cache page into the hidden iframe
-            statusEl.textContent = 'Starting cache for firmware ' + (fwVersion || 'unknown') + '...';
+        frame.addEventListener('error', function () {
+            finishAndRedirect('Cache page failed to load. Continuing...', 2000);
+        });
 
-            if (!targetPage || typeof targetPage !== 'string') {
-                statusEl.textContent = 'Cache error: No cache page returned for firmware ' + (fwVersion || 'unknown');
-                return;
-            }
+        // Safety net if the iframe never posts a completion or error message
+        var stallTimer = setTimeout(function () {
+            finishAndRedirect('Cache timed out. Continuing...', 2000);
+        }, 20000);
 
+        statusEl.textContent = 'Starting cache for firmware ' + (fwVersion || 'unknown') + '...';
+        if (targetPage) {
             frame.src = targetPage;
-        })();
+        } else {
+            finishAndRedirect('No cache page for firmware ' + (fwVersion || 'unknown') + '. Continuing...', 2000);
+        }
     </script>
 </body>
 
