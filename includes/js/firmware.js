@@ -213,11 +213,6 @@ function isChainSupported(chainId, fw) {
 
 // Caching
 function getCachePage(fwVersion) {
-    var fwNum = parseFloat(fwVersion);
-    if (isNaN(fwNum)) {
-        return './includes/caches/cachePayloads.html';
-    }
-
     var routes = [
         { min: 4.50, max: 4.72, page: 'cache450-472.html' },
         { min: 4.73, max: 5.07, page: 'cache473-507.html' },
@@ -235,7 +230,7 @@ function getCachePage(fwVersion) {
 
     var matchedPage = 'cachePayloads.html';
     for (var i = 0; i < routes.length; i++) {
-        if (fwNum >= routes[i].min && fwNum <= routes[i].max) {
+        if (fwVersion >= routes[i].min && fwVersion <= routes[i].max) {
             matchedPage = routes[i].page;
             break;
         }
