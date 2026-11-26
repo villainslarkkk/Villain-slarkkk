@@ -1,8 +1,10 @@
 var autoJbInterval;
 var lastScrollY = 0;
 var lastSection = "initial";           // For custom snap scroll on the PS4
-var projectName = "Villain Slarkkk";
+var projectName = "WebKitty";
 var hideUnsupportedPayloads = false;
+var defaultAutoJbTimer = 5;
+var reloadAfterJb = true;
 var commonMax = 14.02;                 // max supported paylaods
 
 var user = {
@@ -33,6 +35,7 @@ var ui = {
   psLogoContainer: document.getElementById('ps-logo-container'),
   clickToStartText: document.getElementById('click-to-start-text'),
   ps4FwStatus: document.getElementById('PS4FW'),
+  exploitChainLabel: document.getElementById('exploitChainLabel'),
   stopAutoJbBtn: document.getElementById('stopAutoJb'),
   updateCacheBtn: document.getElementById("updateCache"),
 
