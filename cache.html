@@ -30,25 +30,14 @@
     <script src="./includes/js/testMode.js"></script>
     <script src="./includes/js/firmware.js"></script>
     <script>
-        var fwVersion = typeof getPs4FwVersion === 'function' ? getPs4FwVersion() : null;
-        var targetPage = typeof getCachePage === 'function' ? getCachePage(fwVersion) : null;
-        var fallbackMainPage = (typeof mainPage !== 'undefined' && mainPage) ? mainPage : './index.html';
+        var fwVersion = getPs4FwVersion();
+        var targetPage = getCachePage(fwVersion);
 
         var statusEl = document.getElementById('cacheStatus');
         var fillEl = document.getElementById('progressFill');
         var frame = document.getElementById('cacheFrame');
-        var settled = false;
 
-        function finishAndRedirect(message, delayMs) {
-            if (settled) return;
-            settled = true;
-            clearTimeout(stallTimer);
-            statusEl.textContent = message;
-            setTimeout(function () {
-                window.location.replace(fallbackMainPage);
-            }, delayMs);
-        }
-
+        // Listen for postMessages from the iframe (iframe_cache.js)
         window.addEventListener('message', function (event) {
             var data = event.data;
             if (!data || !data.type) return;
@@ -62,33 +51,27 @@
                 }
             } else if (data.type === 'CACHE_COMPLETE' || data.type === 'CACHE_EXISTS') {
                 fillEl.style.width = '100%';
-                var msg = data.type === 'CACHE_EXISTS' ? 'Already cached! Redirecting...' : 'Done! Redirecting...';
-                finishAndRedirect(msg, 1000);
+                statusEl.textContent = data.type === 'CACHE_EXISTS' ? 'Already cached! Redirecting...' : 'Done! Redirecting...';
+                setTimeout(function () {
+                    window.location.replace(mainPage);
+                }, 1000);
+
             } else if (data.type === 'CACHE_CHECKING') {
                 statusEl.textContent = 'Checking cache...';
             } else if (data.type === 'CACHE_DOWNLOADING') {
                 statusEl.textContent = 'Caching files...';
             } else if (data.type === 'CACHE_ERROR') {
                 var reason = data.reason || 'Unknown error';
-                finishAndRedirect('Cache error: ' + reason, 3000);
+                statusEl.textContent = 'Cache error: ' + reason;
+                setTimeout(function () {
+                    window.location.replace(mainPage);
+                }, 3000);
             }
         }, false);
 
-        frame.addEventListener('error', function () {
-            finishAndRedirect('Cache page failed to load. Continuing...', 2000);
-        });
-
-        // Safety net if the iframe never posts a completion or error message
-        var stallTimer = setTimeout(function () {
-            finishAndRedirect('Cache timed out. Continuing...', 2000);
-        }, 20000);
-
+        // Load the firmware-based cache page into the hidden iframe
         statusEl.textContent = 'Starting cache for firmware ' + (fwVersion || 'unknown') + '...';
-        if (targetPage) {
-            frame.src = targetPage;
-        } else {
-            finishAndRedirect('No cache page for firmware ' + (fwVersion || 'unknown') + '. Continuing...', 2000);
-        }
+        frame.src = targetPage;
     </script>
 </body>
 
