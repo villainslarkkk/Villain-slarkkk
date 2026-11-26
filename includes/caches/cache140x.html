@@ -1,69 +1,7 @@
 <!DOCTYPE html>
 <html manifest="manifest/140x.manifest">
-<head>
-    <meta charset="UTF-8">
-    <title>Cache 14.0x</title>
-</head>
+<head><meta charset="UTF-8"></head>
 <body>
-    <script src="../../includes/js/cache.js"></script>
-    <script>
-        (function () {
-            function notifyParent(payload) {
-                if (window.parent && window.parent !== window) {
-                    window.parent.postMessage(payload, '*');
-                }
-            }
-
-            notifyParent({ type: 'CACHE_CHECKING' });
-
-            var appCache = window.applicationCache;
-            if (!appCache) {
-                notifyParent({ type: 'CACHE_COMPLETE' });
-                return;
-            }
-
-            appCache.addEventListener('checking', function () {
-                notifyParent({ type: 'CACHE_CHECKING' });
-            }, false);
-
-            appCache.addEventListener('downloading', function () {
-                notifyParent({ type: 'CACHE_DOWNLOADING' });
-            }, false);
-
-            appCache.addEventListener('progress', function (e) {
-                var loaded = e && typeof e.loaded === 'number' ? e.loaded : 0;
-                var total = e && typeof e.total === 'number' && e.total > 0 ? e.total : 0;
-                var percent = total > 0 ? Math.round((loaded / total) * 100) : -1;
-                notifyParent({
-                    type: 'CACHE_PROGRESS',
-                    loaded: loaded,
-                    total: total,
-                    percent: percent
-                });
-            }, false);
-
-            appCache.addEventListener('cached', function () {
-                notifyParent({ type: 'CACHE_COMPLETE' });
-            }, false);
-
-            appCache.addEventListener('updateready', function () {
-                try {
-                    appCache.swapCache();
-                } catch (err) {}
-                notifyParent({ type: 'CACHE_COMPLETE' });
-            }, false);
-
-            appCache.addEventListener('noupdate', function () {
-                notifyParent({ type: 'CACHE_EXISTS' });
-            }, false);
-
-            appCache.addEventListener('error', function () {
-                notifyParent({
-                    type: 'CACHE_ERROR',
-                    reason: 'Manifest or asset load failed (check 140x.manifest paths)'
-                });
-            }, false);
-        })();
-    </script>
+    <script src="../js/iframe_cache.js"></script>
 </body>
 </html>
